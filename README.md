@@ -26,6 +26,8 @@ It's for one person on a small server: one password, your data in your own Postg
 
 **Or download the desktop app** for Windows or Linux from the [latest release](https://github.com/AienTech/dossier/releases/latest). It runs Dossier on your computer with nothing else to install, or opens a Dossier you host. See [Desktop app](https://github.com/AienTech/dossier/wiki/Desktop-app).
 
+> **This fork:** use your Claude Pro/Max subscription instead of an Anthropic API key. See [bridge/README.md](bridge/README.md).
+
 ## Demo
 
 ![Dossier in use: the dashboard, dragging a card on the board, a new application from a pasted posting, refining the tailored resume in the chat, the cover letter, and switching resume themes](.github/images/demo.gif)
