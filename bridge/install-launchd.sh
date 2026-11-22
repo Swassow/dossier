@@ -26,7 +26,7 @@ cp "$src/claude-subscription-bridge.mjs" "$src/start.sh" "$dir/"
 node="$(command -v node)" || { echo "Node isn't on PATH." >&2; exit 1; }
 claude="$(command -v claude)" || { echo "Claude Code isn't on PATH." >&2; exit 1; }
 # launchd starts with a bare PATH: give it the folders node and claude are in.
-path="$(dirname "$node"):$(dirname "$claude"):/usr/bin:/bin:/usr/sbin:/sbin"
+path="$(dirname "$claude"):$(dirname "$node"):/usr/bin:/bin:/usr/sbin:/sbin"
 
 mkdir -p "$(dirname "$plist")" "$(dirname "$log")"
 cat > "$plist" <<EOF
@@ -44,6 +44,7 @@ cat > "$plist" <<EOF
   <dict>
     <key>PATH</key><string>$path</string>
     <key>HOME</key><string>$HOME</string>
+    <key>CLAUDE_BIN</key><string>$claude</string>
     <key>BRIDGE_PORT</key><string>${BRIDGE_PORT:-8787}</string>
   </dict>
   <key>RunAtLoad</key><true/>
