@@ -6,7 +6,7 @@ import { verifySession } from "@/lib/auth/session";
 import { isAiConfigured, isAiUsable, loadAiConfig, loadAiSettingsView } from "@/lib/ai/config";
 import { enabledPortals, jobSearchView, loadJobSearchConfig } from "@/lib/job-search/config";
 import { COUNTRIES, countryCodeFor } from "@/lib/job-search/countries";
-import { SOURCE_INFO } from "@/lib/job-search/sources";
+import { sourceInfo } from "@/lib/job-search/sources";
 import { BUILT_IN_PORTALS } from "@/lib/portals/built-in";
 import { catalogView, readCatalog } from "@/lib/portals/catalog";
 import { loadInstalledPortals } from "@/lib/portals/installed";
@@ -68,6 +68,8 @@ export default async function WelcomePage({ searchParams }: PageProps<"/welcome"
   }
 
   if (step === "done") {
+    // Portals added from the catalog (Himalayas, Remotive…) are named by their own configs, read here first.
+    await loadInstalledPortals();
     const [usable, view, jobs, scoring, connection, name] = await Promise.all([
       isAiUsable(),
       loadAiSettingsView(),
@@ -79,7 +81,7 @@ export default async function WelcomePage({ searchParams }: PageProps<"/welcome"
     const choice = choiceOf(view.provider, view.baseUrl);
     const rows = [
       { label: "AI", value: usable ? (choice ? aiChoice(choice).name : providerOption(view.provider).name) : null, href: "/settings?section=ai" },
-      { label: "Job search", value: enabledPortals(jobs).map((id) => SOURCE_INFO[id].name).join(", ") || null, href: "/settings?section=jobs" },
+      { label: "Job search", value: enabledPortals(jobs).map((id) => sourceInfo(id).name).join(", ") || null, href: "/settings?section=jobs" },
       { label: "Scoring", value: SCORER_INFO[scoring.scorer].name, href: "/settings?section=scoring" },
       { label: "Gmail and Calendar", value: connection.status === "connected" ? connection.email : null, href: "/settings?section=google" },
       { label: "Profile", value: name.trim() || null, href: "/profile" },
