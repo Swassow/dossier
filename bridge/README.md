@@ -40,6 +40,14 @@ Dossier (Docker) ──HTTP──▶ bridge (your Mac, :8787) ──▶ claude -
 
 4. In Settings → AI provider, press **Test connection**.
 
+## Start it automatically (macOS)
+
+```bash
+./bridge/install-launchd.sh
+```
+
+Runs the bridge in the background, starts it at login and restarts it if it stops. It copies the bridge to `~/.local/share/dossier-bridge` (macOS doesn't let background services read the Desktop folder), so run it again after pulling bridge changes. Logs go to `~/Library/Logs/dossier-claude-bridge.log`. To remove it: `./bridge/install-launchd.sh uninstall`.
+
 ## Options (environment variables)
 
 | Variable | Default | |
